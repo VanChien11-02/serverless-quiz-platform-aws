@@ -1,0 +1,8 @@
+.env
+.env.*
+credentials
+*.pem
+*.ppk
+__pycache__/
+.idea/
+.vscode/
