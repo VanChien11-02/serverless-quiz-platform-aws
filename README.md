@@ -44,6 +44,7 @@ GET /health
 ### Get Exam
 
 GET /exams
+
 GET /exams/{examId}
 
 ## Deployment Environment
