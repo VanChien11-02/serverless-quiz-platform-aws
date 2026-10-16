@@ -1,0 +1,275 @@
+{
+  "info": {
+    "_postman_id": "171e851b-b31b-4165-9e79-dc71c2ef6829",
+    "name": "cloud: serverless-quiz",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54304317",
+    "_collection_link": "https://go.postman.co/collection/54304317-171e851b-b31b-4165-9e79-dc71c2ef6829?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "health lambda",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://zntb9b39c7.execute-api.us-east-1.amazonaws.com/health",
+          "protocol": "https",
+          "host": [
+            "zntb9b39c7",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "exams",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://5pgdao630c.execute-api.us-east-1.amazonaws.com/exams",
+          "protocol": "https",
+          "host": [
+            "5pgdao630c",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "exams"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "exams",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"duration\": 45,\r\n    \"title\": \"Java quiz\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://5pgdao630c.execute-api.us-east-1.amazonaws.com/exams",
+          "protocol": "https",
+          "host": [
+            "5pgdao630c",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "exams"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "question 1",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"content\": \"Dich vu AWS nao dung de chay code serverless?\",\r\n  \"options\": {\r\n    \"A\": \"Amazon EC2\",\r\n    \"B\": \"AWS Lambda\",\r\n    \"C\": \"Amazon S3\",\r\n    \"D\": \"Amazon VPC\"\r\n  },\r\n  \"correctAnswer\": \"B\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://5pgdao630c.execute-api.us-east-1.amazonaws.com/exams/EXAM001/questions",
+          "protocol": "https",
+          "host": [
+            "5pgdao630c",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "exams",
+            "EXAM001",
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "question 2",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"content\": \"Dich vu AWS nao luu object?\",\r\n  \"options\": {\"A\": \"S3\", \"B\": \"SQS\", \"C\": \"Lambda\", \"D\": \"IAM\"},\r\n  \"correctAnswer\": \"A\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://5pgdao630c.execute-api.us-east-1.amazonaws.com/exams/EXAM001/questions",
+          "protocol": "https",
+          "host": [
+            "5pgdao630c",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "exams",
+            "EXAM001",
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "question 3",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"content\": \"Dich vu AWS nao la NoSQL database?\",\r\n  \"options\": {\"A\": \"EC2\", \"B\": \"S3\", \"C\": \"DynamoDB\", \"D\": \"CloudFront\"},\r\n  \"correctAnswer\": \"C\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://5pgdao630c.execute-api.us-east-1.amazonaws.com/exams/EXAM001/questions",
+          "protocol": "https",
+          "host": [
+            "5pgdao630c",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "exams",
+            "EXAM001",
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "start exam",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"studentId\": \"student-001\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://p6b9zibh7h.execute-api.us-east-1.amazonaws.com/exams/EXAM001/start",
+          "protocol": "https",
+          "host": [
+            "p6b9zibh7h",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "exams",
+            "EXAM001",
+            "start"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "submit answers",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"answers\" : {\r\n        \"f4bdae61-cc5a-472a-99dc-2ca76d15f4fd\": \"A\",\r\n        \"042440a7-f170-4ac6-abe6-dc4b13bb1cd3\": \"A\",\r\n        \"34d3f926-1350-4dda-92df-57ce6d2b6062\": \"B\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://p6b9zibh7h.execute-api.us-east-1.amazonaws.com/submissions/3e7aa696-d7b5-4c19-b1de-eedd2d1f85db/submit",
+          "protocol": "https",
+          "host": [
+            "p6b9zibh7h",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "submissions",
+            "3e7aa696-d7b5-4c19-b1de-eedd2d1f85db",
+            "submit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "result",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://p6b9zibh7h.execute-api.us-east-1.amazonaws.com/submissions/3e7aa696-d7b5-4c19-b1de-eedd2d1f85db/result",
+          "protocol": "https",
+          "host": [
+            "p6b9zibh7h",
+            "execute-api",
+            "us-east-1",
+            "amazonaws",
+            "com"
+          ],
+          "path": [
+            "submissions",
+            "3e7aa696-d7b5-4c19-b1de-eedd2d1f85db",
+            "result"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
