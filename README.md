@@ -37,6 +37,10 @@ serverless trên AWS Learner Lab.
 
 ## Week2 Progress
 
+### Architecture
+
+![Architecture](architecture/week2-architecture.png)
+
 - [x] **Exam Management:** Build APIs to create exams, add questions, and fetch exam details using AWS Lambda and DynamoDB.
 - [x] **Start Exam:** Initialize exam sessions, randomize question order, and return exam content to candidates.
 - [x] **Time Limit:** Validate exam duration on the backend and reject late submissions.
