@@ -89,8 +89,6 @@ Dựa vào nhận xét
 
 > "Thiết kế serverless tốt. Nhắc thêm cost estimation và security ở tuần 2."
 
-Hai nội dung này giúp em hiểu rõ hơn về chi phí sử dụng các dịch vụ AWS, những rủi ro bảo mật có thể phát sinh và phương án cải thiện hệ thống trong các tuần tiếp theo.
-
 #### 6.1. Bổ sung ước tính chi phí (Cost Estimation)
 
 **Nội dung tiếp thu từ nhận xét GVHD:**
@@ -115,6 +113,8 @@ Em đã bổ sung việc tìm hiểu mô hình tính phí và phân tích các t
 - Xem xét các biện pháp tối ưu như sử dụng kiến trúc Serverless, điều chỉnh cấu hình Lambda và dọn dẹp tài nguyên không sử dụng.
 
 **Kết quả bổ sung:** em đã xác định được các thành phần phát sinh chi phí chính và xây dựng cơ sở để lập bảng dự toán. Kết quả ước tính chi tiết sẽ được cập nhật sau khi hoàn tất tính toán trên AWS Pricing Calculator.
+
+[Cost estimation](cost-estimation.md)
 
 #### 6.2. Bổ sung đánh giá bảo mật hệ thống (Security)
 
@@ -156,6 +156,8 @@ Trong Tuần 3, em dự kiến tiếp tục:
 Thông qua việc bổ sung Cost Estimation và Security trong Tuần 2, em không chỉ hoàn thành các chức năng lõi mà còn bước đầu xem xét hệ thống dưới góc độ **chi phí vận hành, tính an toàn và khả năng mở rộng**.
 
 Việc tiếp thu nhận xét của GVHD giúp quá trình phát triển đồ án có định hướng rõ ràng hơn, đồng thời tạo nền tảng để tiếp tục hoàn thiện bảo mật, giám sát và tối ưu hệ thống trong Tuần 3 và Tuần 4.
+
+[Security](security.md)
 
 ### 7. Công cụ và dịch vụ sử dụng (Technology Stack)
 
