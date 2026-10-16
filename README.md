@@ -16,11 +16,11 @@ serverless trên AWS Learner Lab.
 - Amazon VPC
 - AWS IAM LabRole
 
-## Architecture
+## Week 1 Progress
+
+### Architecture
 
 ![Architecture](architecture/week1-architecture.png)
-
-## Week 1 Progress
 
 - [x] Research AWS services
 - [x] Design serverless architecture
@@ -35,6 +35,16 @@ serverless trên AWS Learner Lab.
 - [x] Test GET /exams/{examId}
 - [x] Verify CloudWatch logs
 
+## Week2 Progress
+
+- [x] **Exam Management:** Build APIs to create exams, add questions, and fetch exam details using AWS Lambda and DynamoDB.
+- [x] **Start Exam:** Initialize exam sessions, randomize question order, and return exam content to candidates.
+- [x] **Time Limit:** Validate exam duration on the backend and reject late submissions.
+- [x] **Submit Exam:** Receive answers, store records in the `Submissions` table, and push grading requests to Amazon SQS.
+- [x] **Auto Grading:** Process grading asynchronously using a Grading Lambda triggered by SQS.
+- [x] **Get Result:** Retrieve correct answers count, total questions, and final scores from DynamoDB.
+- [x] **API Testing:** Test endpoints with Postman and monitor execution via AWS CloudWatch Logs.
+
 ## Current API
 
 ### Health Check
@@ -46,6 +56,20 @@ GET /health
 GET /exams
 
 GET /exams/{examId}
+
+### Post Exam and Question 
+
+POST /exams
+
+POST /exams/{id}/questions
+
+### Start and submit exam
+
+POST /exams/{id}/start
+
+POST /submissions/{id}/submit
+
+GET /submissions/{id}/result
 
 ## Deployment Environment
 
