@@ -144,6 +144,14 @@ def lambda_handler(event, context):
     params = event.get("pathParameters") or {}
     exam_id = params.get("id") or params.get("examId")
 
+    # Context is populated by API Gateway HTTP API Lambda authorizer (payload v2.0).
+    principal = ((event.get("requestContext") or {}).get("authorizer") or {}).get("lambda") or {}
+    role = principal.get("role")
+    if role not in ("Admin", "Student") or not principal.get("userId"):
+        return response(401, {"error": "Authentication required"})
+    if method == "POST" and role != "Admin":
+        return response(403, {"error": "Admin role required"})
+
     try:
         if method == "GET" and path.rstrip("/") == "/exams":
             return list_exams()

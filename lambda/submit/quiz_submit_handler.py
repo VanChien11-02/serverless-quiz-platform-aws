@@ -52,10 +52,8 @@ def get_submission(submission_id):
     return submissions_table.get_item(Key={"submissionId": submission_id}, ConsistentRead=True).get("Item")
 
 
-def start_exam(exam_id, body):
-    student_id = body.get("studentId")
-    if not isinstance(student_id, str) or not (1 <= len(student_id.strip()) <= 64):
-        return respond(400, {"error": "studentId must be a 1-64 character string"})
+def start_exam(exam_id, student_id):
+    # student_id is verified identity from the authorizer, NEVER client body.
 
     exam = exams_table.get_item(Key={"examId": exam_id}, ConsistentRead=True).get("Item")
     if not exam:
@@ -143,7 +141,7 @@ def send_to_grading_queue(submission_id):
     )
 
 
-def submit_exam(submission_id, body):
+def submit_exam(submission_id, body, student_id):
     answers = body.get("answers")
     if not isinstance(answers, dict):
         return respond(400, {"error": "answers must be a JSON object"})
@@ -151,6 +149,8 @@ def submit_exam(submission_id, body):
     submission = get_submission(submission_id)
     if not submission:
         return respond(404, {"error": "submission not found"})
+    if submission.get("studentId") != student_id:
+        return respond(403, {"error": "Not your submission"})
 
     valid_ids = set(submission.get("questionOrder", []))
     if (not valid_ids or len(answers) > len(valid_ids)
@@ -209,10 +209,12 @@ def submit_exam(submission_id, body):
     return respond(202, {"submissionId": submission_id, "status": "SUBMITTED"})
 
 
-def get_result(submission_id):
+def get_result(submission_id, student_id):
     submission = get_submission(submission_id)
     if not submission:
         return respond(404, {"error": "submission not found"})
+    if submission.get("studentId") != student_id:
+        return respond(403, {"error": "Not your submission"})
 
     status = submission.get("status")
     if status == "IN_PROGRESS" and int(datetime.now(timezone.utc).timestamp()) >= int(submission["expiresAtEpoch"]):
@@ -236,17 +238,24 @@ def lambda_handler(event, context):
               or event.get("httpMethod") or "").upper()
     path = (event.get("rawPath") or event.get("path") or "").rstrip("/")
 
+    principal = ((event.get("requestContext") or {}).get("authorizer") or {}).get("lambda") or {}
+    if not principal.get("userId") or principal.get("role") not in ("Student", "Admin"):
+        return respond(401, {"error": "Authentication required"})
+    if principal.get("role") != "Student":
+        return respond(403, {"error": "Student role required"})
+    student_id = principal["userId"]
+
     try:
         start_match = re.fullmatch(r"/exams/([^/]+)/start", path)
         submit_match = re.fullmatch(r"/submissions/([^/]+)/submit", path)
         result_match = re.fullmatch(r"/submissions/([^/]+)/result", path)
 
         if method == "POST" and start_match:
-            return start_exam(start_match.group(1), get_body(event))
+            return start_exam(start_match.group(1), student_id)
         if method == "POST" and submit_match:
-            return submit_exam(submit_match.group(1), get_body(event))
+            return submit_exam(submit_match.group(1), get_body(event), student_id)
         if method == "GET" and result_match:
-            return get_result(result_match.group(1))
+            return get_result(result_match.group(1), student_id)
         return respond(404, {"error": "Route not found"})
     except (ValueError, TypeError, json.JSONDecodeError):
         return respond(400, {"error": "Invalid request body or data"})
