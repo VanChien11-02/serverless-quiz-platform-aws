@@ -6,3 +6,4 @@ credentials
 __pycache__/
 .idea/
 .vscode/
+admin-item.json
