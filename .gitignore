@@ -7,3 +7,5 @@ __pycache__/
 .idea/
 .vscode/
 admin-item.json
+.venv/
+load-test/test-students-local.csv

@@ -55,7 +55,7 @@ serverless trên AWS Learner Lab.
 
 ![Week 3 Architecture – JWT, RBAC and Monitoring](architecture/week3-architecture.png)
 
-> **Architecture update:** Week 3 extends the Week 2 workflow with an **Auth Lambda**, **JWT Lambda Authorizer**, and **DynamoDB Users** table. Keep the SQS → Grading Lambda → Submissions flow from Week 2. Export the revised diagram as `architecture/week3-architecture.png` to display it here.
+> **Week 3 (GVHD approved):** Extends Week 2 with an **Auth Lambda**, **JWT Lambda Authorizer**, and DynamoDB `Users` table; preserves SQS asynchronous grading. Architecture and evidence were verified during the Week 3 review.
 
 - [x] **Student Registration & Login:** Implement `POST /auth/register` and `POST /auth/login` with an Auth Lambda and a `Users` table in DynamoDB.
 - [x] **JWT Authentication:** Generate signed JWTs (HS256) containing `sub`, `role`, `iat`, `exp`, `iss` and `aud`, without Amazon Cognito.
@@ -65,7 +65,7 @@ serverless trên AWS Learner Lab.
 - [x] **Submission Ownership:** Use the authenticated Student ID when creating attempts and check ownership before submission/result access.
 - [x] **Integration Debugging:** Update Exam and Attempt Lambda handlers to enforce RBAC and check behavior using Postman.
 - [x] **CloudWatch Troubleshooting:** Use Lambda logs to inspect runtime, timeout and integration issues during deployment.
-- [ ] **Attach final evidence:** Add screenshots for expired-token rejection, CloudWatch metrics, and a completed grading result after verifying each in AWS Learner Lab.
+- [x] **Final evidence reviewed by advisor:** Valid/expired JWT screenshots, CloudWatch metrics and a completed grading result (`2/3`, `6.67/10`); Week 3 was approved.
 
 ### Authentication & Authorization Workflow
 
@@ -93,6 +93,36 @@ JWT Authorizer checks token validity, while **backend Lambdas enforce role and s
 - **Asynchronous grading:** Student submits answers → Attempt Lambda stores `SUBMITTED` → SQS triggers Grading Lambda → DynamoDB is updated to `COMPLETED` with a score. A `200 OK` response with `SUBMITTED` alone does **not** confirm grading is complete.
 - **CloudWatch:** Review Lambda `Invocations`, `Errors`, `Duration`, `Throttles`, and API Gateway 4xx/5xx where enabled; retain actual metric/log screenshots. Test concurrency/throttling under the Lab limits in Week 4.
 - **Security:** Never commit `JWT_SECRET`, Admin passwords, access tokens, `admin-item.json`, or DynamoDB password hashes/salts.
+
+## Week 4 Progress – Performance, CSV Export & Final Demo
+
+### Architecture (target design)
+
+![Week 4 Architecture – Performance & CSV Export](architecture/week4-architecture.png)
+
+**Inherited from approved Week 3:** Auth Lambda, self-implemented HS256 JWT, Lambda Authorizer, Admin/Student RBAC, submission ownership, SQS grading, and the `COMPLETED` result (2 of 3 correct, **6.67/10**).
+
+**Week 4 checklist – update only after AWS tests/evidence:**
+
+- [x] **Admin CSV export:** Deploy `quiz-export-report` Lambda and protect `POST /reports/export` with the JWT Authorizer and backend `Admin` role check.
+- [x] **Private S3 CSV:** Export completed submissions from DynamoDB `Submissions` to a private S3 bucket; verify CSV content and permissions.
+- [x] **Locust load test:** Run 10 → 50 → 100 → 200 virtual users; record requests, failure rate, RPS, p95 and completed submissions.
+- [x] **Lambda concurrency & throttling:** Verify actual account quota, respect the Lab 10-concurrency requirement, capture `ConcurrentExecutions`/`Throttles` metrics.
+- [x] **Cost & cleanup:** Compare real usage/budget (if accessible) against Week 2 estimates; clean up test data/resources and restore concurrency settings.
+- [x] **Final evidence & demo:** Upload screenshots, worklog with actual hours (≥8h per student per week), commits and a demo video (≤10 minutes).
+
+**Documentation:**
+
+- [Week 4 report (draft; fill actual test evidence)](docs/week4/week4-report.md)
+- [Week 4 test results template](docs/week4/week4-test-results.md)
+- [Week 4 worklog (fill actual hours)](docs/week4/worklog.md)
+- [Cost report](docs/week4/cost-report.md) · [Cleanup checklist](docs/week4/cleanup.md)
+
+**Week 4 planned API:** `POST /reports/export` — `Admin` only, JWT required. The existing Exam and Attempt API Gateway base URLs may differ. Only add this route to your current API list **after** deployment and Postman verification.
+
+### Week 4 load-testing distinction
+
+`200 virtual users` in Locust measures client-side simulated activity; it **does not imply 200 concurrent Lambda executions**. A read-only test using one Student JWT is not an E2E test of 200 independent Student accounts. Use CloudWatch and DynamoDB/SQS records to confirm the actual service behavior.
 
 ## Current API
 
